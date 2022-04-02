@@ -1,9 +1,9 @@
 const ProductsService = require('../services/ProductsService');
-const HTTPCodes = require('../schemas/HTTPCodes');
-const ProductSchema = require('../schemas/ProductSchema');
-const { errorMessage } = require('../schemas/ProductErrorsResponse');
+// const HTTPCodes = require('../schemas/HTTPCodes');
+// const ProductSchema = require('../schemas/ProductSchema');
+// const { errorMessage } = require('../schemas/ProductErrorsResponse');
 
-const { validation, blank } = ProductSchema;
+// const { validation, blank } = ProductSchema;
 
 const getAll = async (req, res) => {
   try {
@@ -33,7 +33,7 @@ const getById = async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: 'Erro no Servidor' });
-    return res.status(HTTPCodes.LOCAL_ERROR).json(errorMessage.noGet).end();
+    // return res.status(HTTPCodes.LOCAL_ERROR).json(errorMessage.noGet).end();
   }
 };
 
