@@ -5,6 +5,7 @@ const code = {
   NOT_FOUND: 404,
   LOCAL_ERROR: 500,
   FILL: 422,
+  ALREADY_EXIST: 409,
 
 };
 

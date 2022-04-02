@@ -1,18 +1,21 @@
-const ErrorsResponse = require('./ProductErrorsResponse');
+const ErrorResponse = require('./SaleErrorsResponse');
 
-const blank = (value) => (!value);
+const isBlank = (value) => (!value);
 const isANumber = (item) => !Number.isNaN(Number(item));
+const nameIsLower = (name) => (name.length < 5);
+const quantityIsLower = (quantity) => (Number(quantity) < 1);
 
-const validation = (id) => {
+const validation = (name, quantity) => {
   switch (true) {
-    case blank(id): return { message: ErrorsResponse.invalidId };
-    case isANumber(id): return { message: ErrorsResponse.invalidId };
+    case isBlank(name): return { message: ErrorResponse.nameBlank };
+    case nameIsLower(name): return { message: ErrorResponse.nameLength };
+    case quantityIsLower(quantity): return { message: ErrorResponse.quantityLower };
     default: return {};
  }
 };
 
 module.exports = {
   validation,
-  blank,
+  isBlank,
   isANumber,
 };

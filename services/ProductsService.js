@@ -1,5 +1,5 @@
 const ProductsModel = require('../models/ProductsModel');
-const ErrorResponse = require('../schemas/ProductErrorsResponse');
+const { errorMessage } = require('../schemas/ProductErrorsResponse');
 // const fs = require('fs').promises;
 
 const getAll = async () => {
@@ -13,7 +13,7 @@ const getById = async (id) => {
     return productId;
   } catch (error) {
     console.log(error);
-    return ErrorResponse.noGet;
+    return errorMessage.noGet;
   }
 };
 
@@ -21,13 +21,13 @@ const create = async (product) => {
   try {
     const { name } = product;
     const productExistence = await ProductsModel.getByName(name);
-    if (productExistence) return ErrorResponse.BAD_REQUEST;
+    if (productExistence) return errorMessage.alreadyExists.error;
 
     const productCreated = await ProductsModel.create(product);
     return productCreated;
   } catch (error) {
     console.log(error);
-    return ErrorResponse.noGet;
+    return errorMessage.noGet;
   }
 };
 
