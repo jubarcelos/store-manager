@@ -5,6 +5,10 @@ const ErrorCodes = require('./HTTPCodes');
    noSaleFound: 'No sales was found',
    saleNotFound: 'Sales not found',
    noGet: 'Erro no Servidor',
+   nameBlank: 'name is required',
+   nameLength: 'length must be at least 5 characters long',
+   quantityBlank: 'quantity is required',
+   quantityLower: 'quantity must be greater than or equal to 1',
  };
 
   const errorMessage = {
@@ -18,6 +22,7 @@ const ErrorCodes = require('./HTTPCodes');
      error: { code: ErrorCodes.NOT_FOUND, message: message.saleNotFound },
    },
    noGet: { error: { code: ErrorCodes.LOCAL_ERROR, message: message.noGet } },
+   errorFill: { error: { code: ErrorCodes.FILL, message: message.errorFill } },
  };
 
   module.exports = { message, errorMessage };
