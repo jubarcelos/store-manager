@@ -1,4 +1,6 @@
 const ProductsModel = require('../models/ProductsModel');
+const ErrorResponse = require('../schemas/ProductErrorsResponse');
+// const fs = require('fs').promises;
 
 const getAll = async () => {
   const products = await ProductsModel.getAll();
@@ -11,11 +13,26 @@ const getById = async (id) => {
     return productId;
   } catch (error) {
     console.log(error);
-    return { error: 500, message: 'Erro no Servidor' };
+    return ErrorResponse.noGet;
+  }
+};
+
+const create = async (product) => {
+  try {
+    const { name } = product;
+    const productExistence = await ProductsModel.getByName(name);
+    if (productExistence) return ErrorResponse.BAD_REQUEST;
+
+    const productCreated = await ProductsModel.create(product);
+    return productCreated;
+  } catch (error) {
+    console.log(error);
+    return ErrorResponse.noGet;
   }
 };
 
 module.exports = {
   getAll,
   getById,
+  create,
 };
