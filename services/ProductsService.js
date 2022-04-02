@@ -1,6 +1,5 @@
 const ProductsModel = require('../models/ProductsModel');
 const { errorMessage } = require('../schemas/ProductErrorsResponse');
-// const fs = require('fs').promises;
 
 const getAll = async () => {
   const products = await ProductsModel.getAll();

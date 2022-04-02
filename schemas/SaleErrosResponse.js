@@ -5,10 +5,10 @@ const ErrorCodes = require('./HTTPCodes');
    noSaleFound: 'No sales was found',
    saleNotFound: 'Sales not found',
    noGet: 'Erro no Servidor',
-   nameBlank: 'name is required',
-   nameLength: 'length must be at least 5 characters long',
-   quantityBlank: 'quantity is required',
-   quantityLower: 'quantity must be greater than or equal to 1',
+  //  nameBlank: '"name" is required',
+  //  nameLength: '"name" length must be at least 5 characters long',
+  //  quantityBlank: '"quantity" is required',
+  //  quantityLower: '"quantity" must be greater than or equal to 1',
  };
 
   const errorMessage = {
