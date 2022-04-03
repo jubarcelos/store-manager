@@ -28,7 +28,11 @@ const getById = async (req, res) => {
 const create = async (req, res) => {
   try {
     const product = await ProductsService.create(req.body);
-    return res.status(HTTPCodes.CREATED).json(product).end();
+    if (!product.name) {
+      return res.status(HTTPCodes.ALREADY_EXIST)
+      .json({ message: message.alreadyExists }).end();
+    }
+      return res.status(HTTPCodes.CREATED).json(product).end();
   } catch (error) {
     console.log(error);
     return res.status(HTTPCodes.LOCAL_ERROR).json({ message: message.noGet });

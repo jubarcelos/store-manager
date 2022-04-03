@@ -9,6 +9,7 @@ const ErrorCodes = require('./HTTPCodes');
    quantityBlank: '"quantity" is required',
    quantityLower: '"quantity" must be greater than or equal to 1',
    productIdNotANumber: '"productId" must be a number',
+   productExistence: '"productId" already exists',
  };
 
   const errorMessage = {

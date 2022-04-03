@@ -22,7 +22,8 @@ const create = async (product) => {
     const productExistence = await ProductsModel.getByName(name);
     if (productExistence) return errorMessage.alreadyExists.error;
 
-    const productCreated = await ProductsModel.create(product);
+    const insertId = await ProductsModel.create(product);
+    const productCreated = await ProductsModel.getById(insertId);
     return productCreated;
   } catch (error) {
     console.log(error);
