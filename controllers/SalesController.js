@@ -1,6 +1,6 @@
 const SalesService = require('../services/SalesService');
 const HTTPCodes = require('../schemas/HTTPCodes');
-const { message } = require('../schemas/ProductErrorsResponse');
+const { message } = require('../schemas/SaleErrosResponse');
 
 const getAll = async (req, res) => {
   try {
@@ -16,7 +16,7 @@ const getById = async (req, res) => {
   try {
     const salesId = await SalesService.getById(req.params.id);
     if (salesId === undefined || salesId.length === 0) {
-      return res.status(HTTPCodes.NOT_FOUND).json({ message: message.productNotFound });
+      return res.status(HTTPCodes.NOT_FOUND).json({ message: message.saleNotFound }).end;
     }
     return res.status(HTTPCodes.OK).json(salesId).end();
   } catch (error) {

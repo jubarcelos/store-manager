@@ -3,12 +3,12 @@ const ErrorCodes = require('./HTTPCodes');
   const message = {
    invalidId: 'Id must be a number!',
    noSaleFound: 'No sales was found',
-   saleNotFound: 'Sales not found',
+   saleNotFound: 'Sale not found',
    noGet: 'Erro no Servidor',
-  //  nameBlank: '"name" is required',
-  //  nameLength: '"name" length must be at least 5 characters long',
-  //  quantityBlank: '"quantity" is required',
-  //  quantityLower: '"quantity" must be greater than or equal to 1',
+   productIdBlank: '"productId" is required',
+   quantityBlank: '"quantity" is required',
+   quantityLower: '"quantity" must be greater than or equal to 1',
+   productIdNotANumber: '"productId" must be a number',
  };
 
   const errorMessage = {
@@ -22,7 +22,11 @@ const ErrorCodes = require('./HTTPCodes');
      error: { code: ErrorCodes.NOT_FOUND, message: message.saleNotFound },
    },
    noGet: { error: { code: ErrorCodes.LOCAL_ERROR, message: message.noGet } },
-   errorFill: { error: { code: ErrorCodes.FILL, message: message.errorFill } },
+   productIdBlank: { error: { code: ErrorCodes.BAD_REQUEST, message: message.productIdBlank } },
+   quantityBlank: { error: { code: ErrorCodes.BAD_REQUEST, message: message.quantityBlank } },
+   quantityLower: { error: { code: ErrorCodes.FILL, message: message.quantityLower } },
+   productIdNotANumber: { error: { code: ErrorCodes.BAD_REQUEST,
+    message: message.productIdNotANumber } },
  };
 
   module.exports = { message, errorMessage };

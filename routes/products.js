@@ -10,4 +10,6 @@ router.get('/:id', getById);
 
 router.post('/', ProductsMiddleware.validateTask, create);
 
+router.put('/:id', ProductsMiddleware.validateTask);
+
 module.exports = router;

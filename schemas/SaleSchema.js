@@ -1,14 +1,13 @@
 const { errorMessage } = require('./SaleErrosResponse');
 
 const isBlank = (value) => (!value);
-const isANumber = (item) => !Number.isNaN(Number(item));
-const nameIsLower = (name) => (name.length < +5);
 const quantityIsLower = (quantity) => (quantity < +1);
+const quantityBlank = (value) => (!value && value !== 0);
 
-const validation = (name, quantity) => {
+const validation = ([{ productId, quantity }]) => {
   switch (true) {
-    case isBlank(name): return errorMessage.nameBlank.error;
-    case nameIsLower(name): return errorMessage.nameLength.error;
+    case isBlank(productId): return errorMessage.productIdBlank.error;
+    case quantityBlank(quantity): return errorMessage.quantityBlank.error;
     case quantityIsLower(quantity): return errorMessage.quantityLower.error;
     default: return {};
  }
@@ -16,6 +15,4 @@ const validation = (name, quantity) => {
 
 module.exports = {
   validation,
-  isBlank,
-  isANumber,
 };

@@ -1,5 +1,5 @@
 const SalesModel = require('../models/SalesModel');
-const { errorMessage } = require('../schemas/SaleErrorsResponse');
+const { errorMessage } = require('../schemas/SaleErrosResponse');
 
 const getAll = async () => {
   const sales = await SalesModel.getAll();
@@ -18,9 +18,9 @@ const getById = async (id) => {
 
 const create = async (sale) => {
   try {
-    const { name } = sale;
-    const productExistence = await SalesModel.getByName(name);
-    if (productExistence) return errorMessage.alreadyExists.error;
+    const { productId } = sale;
+    const productExistence = await SalesModel.getByproductId(productId);
+    if (productExistence) return SalesModel.update(sale);
 
     const saleCreated = await SalesModel.create(sale);
     return saleCreated;
