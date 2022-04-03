@@ -31,8 +31,21 @@ const create = async (product) => {
   }
 };
 
+const update = async (product, id) => {
+  try {
+  const productExistence = await ProductsModel.getById(id);
+  if (productExistence === undefined) return errorMessage.productNotFound.error;
+  const updated = await ProductsModel.update(product, id);
+  return updated;
+  } catch (error) {
+    console.log(error);
+    return errorMessage.noGet;
+  }
+};
+
 module.exports = {
   getAll,
   getById,
   create,
+  update,
 };
