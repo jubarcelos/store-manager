@@ -19,8 +19,17 @@ const getById = async (id) => {
 const create = async (sales) => {
   try {
     const saleCreated = await SalesModel.create(sales);
-    console.log('service', sales, saleCreated);
     return saleCreated;
+  } catch (error) {
+    console.log(error);
+    return errorMessage.noGet;
+  }
+};
+
+const update = async (sales, saleId) => {
+  try {
+    const saleUpdated = await SalesModel.update(sales, saleId);
+    return saleUpdated;
   } catch (error) {
     console.log(error);
     return errorMessage.noGet;
@@ -31,4 +40,5 @@ module.exports = {
   getAll,
   getById,
   create,
+  update,
 };
