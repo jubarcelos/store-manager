@@ -16,22 +16,19 @@ const getById = async (id) => {
   }
 };
 
-// const create = async (sale) => {
-//   try {
-//     const { productId } = sale;
-//     const productExistence = await SalesModel.getByproductId(productId);
-//     if (productExistence) return errorMessage.productExistence;
-
-//     const saleCreated = await SalesModel.create(sale);
-//     return saleCreated;
-//   } catch (error) {
-//     console.log(error);
-//     return errorMessage.noGet;
-//   }
-// };
+const create = async (sales) => {
+  try {
+    const saleCreated = await SalesModel.create(sales);
+    console.log('service', sales, saleCreated);
+    return saleCreated;
+  } catch (error) {
+    console.log(error);
+    return errorMessage.noGet;
+  }
+};
 
 module.exports = {
   getAll,
   getById,
-  // create,
+  create,
 };

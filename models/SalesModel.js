@@ -20,23 +20,44 @@ const getById = async (id) => {
   return sale;
 };
 
-// const createSaleId = async () => {
-//   const [saleId] = await connection.execute('INSERT INTO sales (date) VALUES (?)', [new Date()]);
-//   return saleId;
-// };
+const createSaleId = async () => {
+  const [saleId] = await connection.execute('INSERT INTO sales () VALUES()');
+  return saleId.insertId;
+};
+
+// const insertQuery = 'INSERT INTO sales_products (sale_id, product_id, quantity) VALUES (?, ?, ?)';
+// await connection.execute(insert, [saleId, productId, quantity]);
+
+const create = async (sales) => {
+  const saleId = await createSaleId();
+  const promise = sales.map(({ productId, quantity }) => {
+    const insert = 'INSERT INTO sales_products (sale_id, product_id, quantity) VALUES (?, ?, ?)';
+    return connection.execute(insert, [saleId, productId, quantity]);
+  });
+  await Promise.all(promise);
+  return { id: saleId, itemsSold: sales };
+};
 
 // const create = async (sale) => {
-//   const { productId, quantity } = sale;
+//   const [{ productId, quantity }] = sale;
 //   const saleId = await createSaleId();
+
 //   const [insertId] = await connection
 //     .execute('INSERT INTO sales_products (sale_id, product_id, quantity) VALUES (?, ?, ?)',
 //     [saleId, productId, quantity]);
 
-//   return {
+//   return [{
 //     id: insertId,
 //     itemsSold: sale,
-//   };
+//   }];
 // };
+
+module.exports = {
+  getAll,
+  getById,
+  create,
+  // update,
+};
 
 // const update = async (saleId, productId, quantity) => {
 //   const [sale] = await connection.execute(
@@ -47,10 +68,3 @@ const getById = async (id) => {
 //   );
 //   return sale;
 // };
-
-module.exports = {
-  getAll,
-  getById,
-  // create,
-  // update,
-};

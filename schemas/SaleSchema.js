@@ -5,7 +5,6 @@ const quantityIsLower = (quantity) => (quantity < +1);
 const quantityBlank = (value) => (!value && value !== 0);
 
 const validation = ([{ productId, quantity }]) => {
-  console.log(productId, quantity);
   switch (true) {
     case isBlank(productId): return errorMessage.productIdBlank.error;
     case quantityBlank(quantity): return errorMessage.quantityBlank.error;

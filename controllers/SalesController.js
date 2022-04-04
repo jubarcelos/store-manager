@@ -27,8 +27,9 @@ const getById = async (req, res) => {
 
 const create = async (req, res) => {
   try {
-    const sale = await SalesService.create(req.body);
-    return res.status(HTTPCodes.CREATED).json(sale).end();
+    const sales = await SalesService.create(req.body);
+    console.log('controller', sales);
+    return res.status(HTTPCodes.CREATED).json(sales).end();
   } catch (error) {
     console.log(error);
     return res.status(HTTPCodes.LOCAL_ERROR).json({ message: message.noGet });
