@@ -6,7 +6,7 @@ const code = {
   LOCAL_ERROR: 500,
   FILL: 422,
   ALREADY_EXIST: 409,
-
+  REMOVED: 204,
 };
 
 module.exports = code;
