@@ -1,22 +1,38 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
-describe("Product Models", () => {
+const connection = require('../../models/connect_mysql');
+const ProductsModel = require('../../models/ProductsModel');
+const ProductsMock = require('../Mocks/ProductsMock');
 
-  describe("valida requisição de produto", () => {
-    before(()=> {
-      sinon.stub(CustomerService,'create').resolves(fakeCustomer);
-    })
+describe('Models', () => {
+  describe('ProductsModels', () => {
+    describe('getAll', () => {
+      describe('when the table Products do not have products', () => {
+        before(() => {
+          sinon.stub(connection, 'execute').returns([ProductsMock.emptyProducts])
+        });
+        after(() => {
+          connection.execute.restore();
+        });
 
-    after(()=>{
-      CustomerService.create.restore()
-    })
+        it('should call a array empty', async () => {
+          const products = await ProductsModel.getAll();
+          expect(products).to.be.deep.eq(ProductsMock.emptyProducts);
+        });
+      });
 
-    it("executou status e json esperados", async () => {  
-      await CustomerController.create(request, response);
+      describe('when the table Products have products', () => {
+        before(() => {
+          sinon.stub(connection, 'execute').returns([ProductsMock.fullProducts])});
+        after(() => {
+          connection.execute.restore();
+        });
 
-      
-      expect(response.status.calledWith(201)).to.be.equal(true)
-      expect(response.json.calledWith(fakeCustomer)).to.be.equal(true)
+         it('should call a function and got as answer a fulled array', async () => {
+          const products = await ProductsModel.getAll();
+            expect((products).to.be.deep.eq(ProductsMock.fullProducts));
+        });
+      });
     });
   });
 });
