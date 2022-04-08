@@ -5,7 +5,7 @@ const { message } = require('../schemas/ProductErrorsResponse');
 const getAll = async (req, res) => {
   try {
     const products = await ProductsService.getAll();
-    return res.status(HTTPCodes.OK).json(products).end();
+    return res.status(HTTPCodes.OK).json(products);
   } catch (error) {
     console.log(error);
     return res.status(HTTPCodes.LOCAL_ERROR).json({ message: message.noGet });
@@ -18,7 +18,7 @@ const getById = async (req, res) => {
   if (productId === undefined) {
     return res.status(HTTPCodes.NOT_FOUND).json({ message: message.productNotFound }).end();
   }
-  return res.status(HTTPCodes.OK).json(productId).end();
+  return res.status(HTTPCodes.OK).json(productId);
   } catch (error) {
     console.log(error);
     return res.status(HTTPCodes.LOCAL_ERROR).json({ message: message.noGet });
