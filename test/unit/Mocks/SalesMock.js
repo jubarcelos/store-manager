@@ -6,9 +6,9 @@ const emptySales = [];
 const fullSales = [
 
   {
-    saleId: fakeId,
+    saleId: fakeIdOne,
     date: '2021-09-09T04:54:29.000Z',
-    productId: fakeId,
+    productId: fakeIdOne,
     quantity: 2,
   },
   {
@@ -75,7 +75,7 @@ const updateSuccess =  {
 }
 
 module.exports = {
-  fakeId,
+  fakeIdOne,
   fakeIdTwo,
   emptySales,
   fullSales,
@@ -84,5 +84,5 @@ module.exports = {
   createSuccessResponse,
   updateSuccessResponse,
   updateSuccess,
-  bodyUpdate
+  bodyUpdated,
 };

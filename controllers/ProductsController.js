@@ -14,9 +14,11 @@ const getAll = async (req, res) => {
 
 const getById = async (req, res) => {
   try {
+    console.log('aqui');
     const productId = await ProductsService.getById(req.params.id);
-  if (productId === undefined) {
-    return res.status(HTTPCodes.NOT_FOUND).json({ message: message.productNotFound }).end();
+    if (productId === undefined) {
+    console.log(productId);
+    return res.status(HTTPCodes.NOT_FOUND).json({ message: message.productNotFound });
   }
   return res.status(HTTPCodes.OK).json(productId);
   } catch (error) {
@@ -30,9 +32,9 @@ const create = async (req, res) => {
     const product = await ProductsService.create(req.body);
     if (!product.name) {
       return res.status(HTTPCodes.ALREADY_EXIST)
-      .json({ message: message.alreadyExists }).end();
+      .json({ message: message.alreadyExists });
     }
-      return res.status(HTTPCodes.CREATED).json(product).end();
+      return res.status(HTTPCodes.CREATED).json(product);
   } catch (error) {
     console.log(error);
     return res.status(HTTPCodes.LOCAL_ERROR).json({ message: message.noGet });
@@ -43,10 +45,10 @@ const update = async (req, res) => {
   try {
     const toUpdate = await ProductsService.getById(req.params.id);
     if (!toUpdate) {
-      return res.status(HTTPCodes.NOT_FOUND).json({ message: message.productNotFound }).end();
+      return res.status(HTTPCodes.NOT_FOUND).json({ message: message.productNotFound });
     }
     const product = await ProductsService.update(req.body, req.params.id);
-    return res.status(HTTPCodes.OK).json(product).end();
+    return res.status(HTTPCodes.OK).json(product);
   } catch (error) {
     console.log(error);
     return res.status(HTTPCodes.LOCAL_ERROR).json({ message: message.noGet });
@@ -57,10 +59,10 @@ const remove = async (req, res) => {
 try {
   const toDelete = await ProductsService.getById(req.params.id);
   if (!toDelete) {
-    return res.status(HTTPCodes.NOT_FOUND).json({ message: message.productNotFound }).end();
+    return res.status(HTTPCodes.NOT_FOUND).json({ message: message.productNotFound });
   }
   await ProductsService.remove(req.params.id);
-  return res.status(HTTPCodes.REMOVED).end();
+  return res.status(HTTPCodes.REMOVED);
 } catch (err) {
   console.log(err);
   return res.status(HTTPCodes.LOCAL_ERROR).json({ message: message.noGet });

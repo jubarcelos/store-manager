@@ -5,7 +5,7 @@ const { message } = require('../schemas/SaleErrosResponse');
 const getAll = async (req, res) => {
   try {
     const sales = await SalesService.getAll();
-    return res.status(HTTPCodes.OK).json(sales).end();
+    return res.status(HTTPCodes.OK).json(sales);
   } catch (error) {
     console.log(error);
     return res.status(HTTPCodes.LOCAL_ERROR).json({ message: message.noGet });
@@ -16,9 +16,9 @@ const getById = async (req, res) => {
   try {
     const salesId = await SalesService.getById(req.params.id);
     if (salesId === undefined || salesId.length === 0) {
-      return res.status(HTTPCodes.NOT_FOUND).json({ message: message.saleNotFound }).end;
+      return res.status(HTTPCodes.NOT_FOUND).json({ message: message.saleNotFound });
     }
-    return res.status(HTTPCodes.OK).json(salesId).end();
+    return res.status(HTTPCodes.OK).json(salesId);
   } catch (error) {
     console.log(error);
     return res.status(HTTPCodes.LOCAL_ERROR).json({ message: message.noGet });
@@ -28,7 +28,7 @@ const getById = async (req, res) => {
 const create = async (req, res) => {
   try {
     const sales = await SalesService.create(req.body);
-    return res.status(HTTPCodes.CREATED).json(sales).end();
+    return res.status(HTTPCodes.CREATED).json(sales);
   } catch (error) {
     console.log(error);
     return res.status(HTTPCodes.LOCAL_ERROR).json({ message: message.noGet });

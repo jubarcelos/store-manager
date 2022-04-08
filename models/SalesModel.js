@@ -17,6 +17,7 @@ const getById = async (id) => {
      WHERE s.id = ?;`,
     [id],
   );
+  console.log(sale);
   return sale;
 };
 

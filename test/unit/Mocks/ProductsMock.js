@@ -35,11 +35,10 @@ const updateProductSuccess =  {id: 1, name: "produto alterado", quantity: 10}
 const fakeBodyChange = { name: "produto alterado", quantity: 10 }
 
 module.exports = {
-  fakeId,
+  fakeIdOne,
   fakeIdTwo,
-  fakeIdThree,
-  fakeProducts,
   emptyProducts,
+  fullProducts,
   fakeBodyFulled,
   fakeBodyExistent,
   fakeBodyNullName,

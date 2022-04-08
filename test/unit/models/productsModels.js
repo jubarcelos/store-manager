@@ -1,7 +1,7 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
-const connection = require('../../models/connect_mysql');
-const ProductsModel = require('../../models/ProductsModel');
+const connection = require('../../../models/connect_mysql');
+const ProductsModel = require('../../../models/ProductsModel');
 const ProductsMock = require('../Mocks/ProductsMock');
 
 describe('Models', () => {
@@ -30,7 +30,7 @@ describe('Models', () => {
 
          it('should call a function and got as answer a fulled array', async () => {
           const products = await ProductsModel.getAll();
-            expect((products).to.be.deep.eq(ProductsMock.fullProducts));
+            expect(products).to.be.deep.eq(ProductsMock.fullProducts);
         });
       });
     });
