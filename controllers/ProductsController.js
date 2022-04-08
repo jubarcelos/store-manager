@@ -62,7 +62,7 @@ try {
     return res.status(HTTPCodes.NOT_FOUND).json({ message: message.productNotFound });
   }
   await ProductsService.remove(req.params.id);
-  return res.status(HTTPCodes.REMOVED);
+  return res.status(HTTPCodes.REMOVED).end();
 } catch (err) {
   console.log(err);
   return res.status(HTTPCodes.LOCAL_ERROR).json({ message: message.noGet });

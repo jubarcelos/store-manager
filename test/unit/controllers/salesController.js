@@ -9,7 +9,7 @@ const { message } = require('../../../schemas/SaleErrosResponse');
 describe('Controller', () => {
   describe('SalesController', () => {
     describe('getAll', () => {
-      describe('when the table do not have this product', () => {
+      describe('when the table do not have any products', () => {
         const req = {};
         const res = {};
 
@@ -32,7 +32,7 @@ describe('Controller', () => {
         });
 
       });
-      describe('when the table have this product', () => {
+      describe('when the table have products', () => {
         const req = {};
         const res = {};
 
@@ -50,7 +50,7 @@ describe('Controller', () => {
           await SalesController.getAll(req, res);
           expect(res.status.calledWith(200)).to.be.true;
         });
-         it('should call a function `res.json` and got as answer an array', async () => {
+         it('should call a function `res.json` and got as answer a fulled array', async () => {
             await SalesController.getAll(req, res);
             expect(res.json.calledWith(SalesMock.fullSales)).to.be.true;
         });
@@ -58,7 +58,7 @@ describe('Controller', () => {
     });
   });
 
-
+// ------------------------ Test to getById function. -----------------------
 
 
   describe('getById', () => {
@@ -103,10 +103,18 @@ describe('Controller', () => {
         await SalesController.getById(req,res);
         expect(res.status.calledWith(200)).to.be.true;
       });
-       it('should call a function `res.json` and got as answer an array', async () => {
+       it('should call a function `res.json` and got as answer an array with one object inside', async () => {
           await SalesController.getAll(req, res);
           expect(res.json.calledWith(SalesMock.fullSales[0])).to.be.true;
       });
     });
+
+// ------------------------ Test to create function. -----------------------
+
+
+// ------------------------ Test to update function. -----------------------
+
+
+// ------------------------ Test to remove function. -----------------------
   });
 });

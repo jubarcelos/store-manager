@@ -21,14 +21,14 @@ const fullProducts = [
   },
 ];
 
-const fakeBodyFulled = { name: "produto 3", quantity: 3 }
-const fakeBodyExistent = { name: "produto 3", quantity: 10 }
+const fakeBodyFulled = { name: "produto 1", quantity: 1 }
+const fakeBodyExistent = { name: "produto 2", quantity: 2 }
 
 const fakeBodyNullName = { quantity: 1 }
 const fakeBodyNulQuantity = { name: "produto 1"}
 
 const createProductSuccessResponse =  [{ insertId: 1}]
-const createProductSuccess =  { id: 1, name: "produto1", quantity: 1 }
+const createProductSuccess =  { id: 1, name: "produto 1", quantity: 1 }
 
 const updateProductSuccessResponse =  [{ affectedRows: 1}]
 const updateProductSuccess =  {id: 1, name: "produto alterado", quantity: 10}
