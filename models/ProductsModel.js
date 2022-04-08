@@ -12,7 +12,7 @@ const getById = async (id) => {
 
 const getByName = async (name) => {
   const [product] = await connection.execute('SELECT * FROM products WHERE name = ?', [name]);
-  if (product.length === 0 || !product) return false;
+  // if (product.length === 0 || !product) return false;
   return product[0];
 };
 
