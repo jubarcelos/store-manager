@@ -101,10 +101,30 @@ describe("Services", () => {
           expect(products).to.be.deep.equal(ProductsMock.createProductSuccess);
         });
       });
+      describe("when the table do not have this products", () => {
+        before(() => {
+          sinon.stub(ProductsModel, "create").resolves(ProductsMock.fakeIdOne);
+          sinon
+            .stub(ProductsModel, "getById")
+            .resolves(ProductsMock.fakeProduct);
+          sinon.stub(ProductsModel, "getByName").resolves(ProductsMock.fakeIdOne);
+        });
+        after(() => {
+          ProductsModel.create.restore();
+          ProductsModel.getById.restore();
+          ProductsModel.getByName.restore();
+        });
+
+        it("should call a function to introduce a new product in table and return that product", async () => {
+          const products = await ProductsService.create(
+            ProductsMock.fakeBodyFulled,
+            ProductsMock.fakeIdOne
+          );
+          expect(products).to.be.deep.equal(errorMessage.alreadyExists.error);
+        });
+      });
     });
-
-    // não consegui criar o que não consegue criar.
-
+    
     // ------------------------ Test to update function. -----------------------
 
     describe("update", () => {
@@ -118,7 +138,7 @@ describe("Services", () => {
           ProductsModel.getById.restore();
         });
 
-        it("should call a function to introduce a new product in table and return that product", async () => {
+        it("should call a function to introduce a new product in table and return an error", async () => {
           const products = await ProductsService.update(
             ProductsMock.fakeBodyChange,
             ProductsMock.fakeIdOne
@@ -126,30 +146,44 @@ describe("Services", () => {
           expect(products).to.be.deep.equal(errorMessage.productNotFound.error);
         });
       });
-      // describe("when the table do not have this products", () => {
-      //   before(() => {
-      //     sinon.stub(ProductsModel, "update").resolves(ProductsMock.updateProductSuccess);
-      //     sinon.stub(ProductsModel, "getById").resolves(undefined);
-      //   });
-      //   after(() => {
-      //     ProductsModel.update.restore();
-      //     ProductsModel.getById.restore();
-      //   });
+      describe("when the table have this products", () => {
+        before(() => {
+          sinon.stub(ProductsModel, "update").resolves(ProductsMock.updateProductSuccess);
+          sinon.stub(ProductsModel, "getById").resolves(ProductsMock.fakeIdOne);
+        });
+        after(() => {
+          ProductsModel.update.restore();
+          ProductsModel.getById.restore();
+        });
 
-      //   it("should call a function to introduce a new product in table and return that product", async () => {
-      //     const products = await ProductsService.update(
-      //       ProductsMock.fakeBodyChange,
-      //       ProductsMock.fakeIdOne
-      //     );
-      //     expect(products).to.be.deep.equal(ProductsMock.updateProductSuccess);
-      //   });
-      // });
+        it("should call a function to introduce a new product in table and return that product", async () => {
+          const products = await ProductsService.update(
+            ProductsMock.fakeBodyChange,
+            ProductsMock.fakeIdOne
+          );
+          expect(products).to.be.deep.equal(ProductsMock.updateProductSuccess);
+        });
+      });
     });
-    // não consegui criar o que não consegue fazer update.
 
     // ------------------------ Test to remove function. -----------------------
 
     describe("remove", () => {
+    describe("when the table do not have this products", () => {
+      before(() => {
+        sinon.stub(ProductsModel, "remove").resolves({});
+        sinon.stub(ProductsModel, "getById").resolves(undefined);
+      });
+      after(() => {
+        ProductsModel.remove.restore();
+        ProductsModel.getById.restore();
+      });
+
+      it("should call a function to remove a product in table and return a error", async () => {
+        const products = await ProductsService.remove(undefined);
+        expect(products).to.be.deep.equal(errorMessage.productNotFound.error);
+      });
+    });
       describe("when the table have this products", () => {
         before(() => {
           sinon.stub(ProductsModel, "remove").resolves({});
@@ -166,6 +200,6 @@ describe("Services", () => {
         });
       });
     });
-    // não consegui criar o que não consegue fazer update.
+
   });
 });

@@ -114,7 +114,6 @@ describe('Controller', () => {
 // ------------------------ Test to create function. -----------------------
 
 describe('create', () => {
-
   describe('when the table do not have this product', () => {
     const req = { body: ProductsMock.fakeBodyFulled };
     const res = {};
@@ -176,42 +175,46 @@ describe('create', () => {
 //       res.status = sinon.stub().returns(res);
 //       res.json = sinon.stub().returns(res);
 
-//       sinon.stub(ProductsService, 'update').returns(ProductsMock.updateProductSuccess);
+//       sinon.stub(ProductsService, 'update').resolves(undefined);
+//       sinon.stub(ProductsService, 'getById').resolves(ProductsMock.emptyProducts);
 //     });
 //     after(() => {
 //       ProductsService.update.restore();
+//       ProductsService.getById.restore();
 //     });
 
-//     it('should call a function `res.status` and got value (201)', async () => {
-//       await ProductsController.create(req,res);
-//       expect(res.status.calledWith(Code.CREATED)).to.be.true;
+//     it('should call a function `res.status` and got value (404)', async () => {
+//       await ProductsController.update(req,res);
+//       expect(res.status.calledWith(Code.NOT_FOUND)).to.be.true;
 //     });
-//      it('should call a function `res.json` and got as answer an array with one object inside', async () => {
-//         await ProductsController.create(req, res);
-//         expect(res.json.calledWith(ProductsMock.updateProductSuccess)).to.be.true;
+//      it('should call a function `res.json` and got as answer an array empty', async () => {
+//         await ProductsController.update(req, res);
+//         expect(res.json.calledWith(ProductsMock.emptyProducts)).to.be.true;
 //     });
 //   });
 
-//   describe('when the table already have this product', () => {
-//     const req = { params: { id: 1 } };
+//   describe('when the table have this product', () => {
+//     const req = { body: ProductsMock.fakeBodyChange, params: { id: ProductsMock.fakeIdOne } };
 //     const res = {};
 
 //     before(() => {
 //       res.status = sinon.stub().returns(res);
 //       res.json = sinon.stub().returns(res);
-//       sinon.stub(ProductsModel, 'getByName').returns(ProductsMock.createProductSuccess);
+//       sinon.stub(ProductsModel, 'getById').resolves(ProductsMock.createProductSuccess);
+//       sinon.stub(ProductsService, 'update').resolves(ProductsMock.updateProductSuccess);
 //     });
 //     after(() => {
-//       ProductsModel.getByName.restore();
+//       ProductsModel.getById.restore();
+//       ProductsService.update.restore();
 //     });
 
-//     it('should call a function `res.status` and got value (409)', async () => {
-//       await ProductsController.create(req, res);
-//       expect(res.status.calledWith(Code.ALREADY_EXIST)).to.be.true;
+//     it('should call a function `res.status` and got value (200)', async () => {
+//       await ProductsController.update(req, res);
+//       expect(res.status.calledWith(Code.OK)).to.be.true;
 //     });
 //      it('should call a function and got a res.json with []', async () => {
-//         await ProductsController.create(req, res);
-//         expect(res.json.calledWith({ message: message.alreadyExists })).to.be.true;
+//         await ProductsController.update(req, res);
+//         expect(res.json.calledWith({ message: updateProductSuccess })).to.be.true;
 //     });
 
 //   });
