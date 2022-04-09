@@ -17,13 +17,12 @@ const getById = async (id) => {
      WHERE s.id = ?;`,
     [id],
   );
-  console.log(sale);
   return sale;
 };
 
 const createSaleId = async () => {
-  const [saleId] = await connection.execute('INSERT INTO sales () VALUES()');
-  return saleId.insertId;
+  const [{ insertId }] = await connection.execute('INSERT INTO sales () VALUES()');
+  return insertId;
 };
 
 const create = async (sales) => {
@@ -49,6 +48,7 @@ const update = async (sales, saleId) => {
 module.exports = {
   getAll,
   getById,
+  createSaleId,
   create,
   update,
 };

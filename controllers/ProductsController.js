@@ -14,7 +14,6 @@ const getAll = async (req, res) => {
 
 const getById = async (req, res) => {
   try {
-    console.log('aqui');
     const productId = await ProductsService.getById(req.params.id);
     if (productId === undefined) {
     console.log(productId);

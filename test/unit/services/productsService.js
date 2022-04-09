@@ -85,10 +85,12 @@ describe("Services", () => {
           sinon
             .stub(ProductsModel, "getById")
             .resolves(ProductsMock.fakeProduct);
+          sinon.stub(ProductsModel, "getByName").resolves(undefined);
         });
         after(() => {
           ProductsModel.create.restore();
           ProductsModel.getById.restore();
+          ProductsModel.getByName.restore();
         });
 
         it("should call a function to introduce a new product in table and return that product", async () => {
@@ -109,9 +111,11 @@ describe("Services", () => {
       describe("when the table do not have this products", () => {
         before(() => {
           sinon.stub(ProductsModel, "update").resolves(ProductsMock.updateProductSuccess);
+          sinon.stub(ProductsModel, "getById").resolves(undefined);
         });
         after(() => {
           ProductsModel.update.restore();
+          ProductsModel.getById.restore();
         });
 
         it("should call a function to introduce a new product in table and return that product", async () => {
@@ -119,21 +123,41 @@ describe("Services", () => {
             ProductsMock.fakeBodyChange,
             ProductsMock.fakeIdOne
           );
-          expect(products).to.be.deep.equal(ProductsMock.updateProductSuccess);
+          expect(products).to.be.deep.equal(errorMessage.productNotFound.error);
         });
       });
+      // describe("when the table do not have this products", () => {
+      //   before(() => {
+      //     sinon.stub(ProductsModel, "update").resolves(ProductsMock.updateProductSuccess);
+      //     sinon.stub(ProductsModel, "getById").resolves(undefined);
+      //   });
+      //   after(() => {
+      //     ProductsModel.update.restore();
+      //     ProductsModel.getById.restore();
+      //   });
+
+      //   it("should call a function to introduce a new product in table and return that product", async () => {
+      //     const products = await ProductsService.update(
+      //       ProductsMock.fakeBodyChange,
+      //       ProductsMock.fakeIdOne
+      //     );
+      //     expect(products).to.be.deep.equal(ProductsMock.updateProductSuccess);
+      //   });
+      // });
     });
     // não consegui criar o que não consegue fazer update.
 
     // ------------------------ Test to remove function. -----------------------
 
     describe("remove", () => {
-      describe("when the table do not have this products", () => {
+      describe("when the table have this products", () => {
         before(() => {
           sinon.stub(ProductsModel, "remove").resolves({});
+          sinon.stub(ProductsModel, "getById").resolves(ProductsMock.fakeProduct);
         });
         after(() => {
           ProductsModel.remove.restore();
+          ProductsModel.getById.restore();
         });
 
         it("should call a function to remove a product in table", async () => {

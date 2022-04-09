@@ -48,7 +48,7 @@ const bodyUpdated =   [
 
 const createSuccessResponse =  [{ insertId: 1}]
 
-const createSuccess =  {
+const createdSuccess =  {
   id: 1,
   itemsSold: [
     {
@@ -62,9 +62,9 @@ const createSuccess =  {
   ]
 }
 
-const updateSuccessResponse =  [{ affectedRows: 1}]
+const updatedSuccessResponse =  [{ affectedRows: 1}]
 
-const updateSuccess =  {
+const updatedSuccess =  {
   saleId: 1,
   itemUpdated: [
     {
@@ -80,9 +80,9 @@ module.exports = {
   emptySales,
   fullSales,
   fakeBodyFulled,
-  createSuccess,
+  createdSuccess,
   createSuccessResponse,
-  updateSuccessResponse,
-  updateSuccess,
+  updatedSuccessResponse,
+  updatedSuccess,
   bodyUpdated,
 };
