@@ -1,76 +1,147 @@
-const { expect } = require('chai');
-const sinon = require('sinon');
-const ProductsService = require('../../../services/ProductsService');
-const ProductsModel = require('../../../models/ProductsModel');
-const ProductsMock = require('../Mocks/ProductsMock');
+const { expect } = require("chai");
+const sinon = require("sinon");
+const ProductsService = require("../../../services/ProductsService");
+const ProductsModel = require("../../../models/ProductsModel");
+const ProductsMock = require("../Mocks/ProductsMock");
+const { errorMessage } = require("../../../schemas/ProductErrorsResponse");
 
-describe('Services', () => {
-  describe('ProductsServices', () => {
-    describe('getAll', () => {
-      describe('when the table do not have Products', () => {
+describe("Services", () => {
+  describe("ProductsServices", () => {
+    describe("getAll", () => {
+      describe("when the table do not have Products", () => {
         before(() => {
-          sinon.stub(ProductsModel, 'getAll').resolves(ProductsMock.emptyProducts);
+          sinon
+            .stub(ProductsModel, "getAll")
+            .resolves(ProductsMock.emptyProducts);
         });
         after(() => {
           ProductsModel.getAll.restore();
         });
 
-        it('should call a function to make a request to model and return a error', async () => {
+        it("should call a function to make a request to model and return a error", async () => {
           const products = await ProductsService.getAll();
-            expect(products).to.be.deep.eq(ProductsMock.emptyProducts);
+          expect(products).to.be.deep.eq(ProductsMock.emptyProducts);
         });
       });
-      describe('when the table have Products', () => {
+      describe("when the table have Products", () => {
         before(() => {
-          sinon.stub(ProductsModel, 'getAll').resolves(ProductsMock.fullProducts);
+          sinon
+            .stub(ProductsModel, "getAll")
+            .resolves(ProductsMock.fullProducts);
         });
         after(() => {
           ProductsModel.getAll.restore();
         });
 
-        it('should call a function to make a request to model and got all Products', async () => {
+        it("should call a function to make a request to model and got all Products", async () => {
           const products = await ProductsService.getAll();
-          expect(products).to.deep.eq(ProductsMock.fullProducts);
+          expect(products).to.deep.equal(ProductsMock.fullProducts);
         });
       });
     });
 
-// ------------------------ Test to getById function. ----------------------
-describe('getById', () => {
-  describe('when the table do not have Products', () => {
-    before(() => {
-      sinon.stub(ProductsModel, 'getById').resolves(ProductsMock.emptyProducts);
+    // ------------------------ Test to getById function. ----------------------
+    describe("getById", () => {
+      describe("when the table do not have Products", () => {
+        before(() => {
+          sinon
+            .stub(ProductsModel, "getById")
+            .resolves(ProductsMock.emptyProducts);
+        });
+        after(() => {
+          ProductsModel.getById.restore();
+        });
+
+        it("should call a function to make a request to model and return a error", async () => {
+          const products = await ProductsService.getById();
+          expect(products).to.be.deep.eq(ProductsMock.emptyProducts);
+        });
+      });
+      describe("when the table have Products", () => {
+        before(() => {
+          sinon
+            .stub(ProductsModel, "getById")
+            .resolves(ProductsMock.fullProducts[0]);
+        });
+        after(() => {
+          ProductsModel.getById.restore();
+        });
+
+        it("should call a function to make a request to model and got all Products", async () => {
+          const products = await ProductsService.getById(
+            ProductsMock.fakeIdOne
+          );
+          expect(products).to.deep.eq(ProductsMock.fullProducts[0]);
+        });
+      });
     });
-    after(() => {
-      ProductsModel.getById.restore();
+
+    // ------------------------ Test to create function. -----------------------
+
+    describe("create", () => {
+      describe("when the table do not have this products", () => {
+        before(() => {
+          sinon.stub(ProductsModel, "create").resolves(ProductsMock.fakeIdOne);
+          sinon
+            .stub(ProductsModel, "getById")
+            .resolves(ProductsMock.fakeProduct);
+        });
+        after(() => {
+          ProductsModel.create.restore();
+          ProductsModel.getById.restore();
+        });
+
+        it("should call a function to introduce a new product in table and return that product", async () => {
+          const products = await ProductsService.create(
+            ProductsMock.fakeBodyFulled,
+            ProductsMock.fakeIdOne
+          );
+          expect(products).to.be.deep.equal(ProductsMock.createProductSuccess);
+        });
+      });
     });
 
-    it('should call a function to make a request to model and return a error', async () => {
-      const products = await ProductsService.getById();
-        expect(products).to.be.deep.eq(ProductsMock.emptyProducts);
+    // não consegui criar o que não consegue criar.
+
+    // ------------------------ Test to update function. -----------------------
+
+    describe("update", () => {
+      describe("when the table do not have this products", () => {
+        before(() => {
+          sinon.stub(ProductsModel, "update").resolves(ProductsMock.updateProductSuccess);
+        });
+        after(() => {
+          ProductsModel.update.restore();
+        });
+
+        it("should call a function to introduce a new product in table and return that product", async () => {
+          const products = await ProductsService.update(
+            ProductsMock.fakeBodyChange,
+            ProductsMock.fakeIdOne
+          );
+          expect(products).to.be.deep.equal(ProductsMock.updateProductSuccess);
+        });
+      });
     });
-  });
-  describe('when the table have Products', () => {
-    before(() => {
-      sinon.stub(ProductsModel, 'getById').resolves(ProductsMock.fullProducts[0]);
+    // não consegui criar o que não consegue fazer update.
+
+    // ------------------------ Test to remove function. -----------------------
+
+    describe("remove", () => {
+      describe("when the table do not have this products", () => {
+        before(() => {
+          sinon.stub(ProductsModel, "remove").resolves({});
+        });
+        after(() => {
+          ProductsModel.remove.restore();
+        });
+
+        it("should call a function to remove a product in table", async () => {
+          const products = await ProductsService.remove(ProductsMock.fakeIdOne);
+          expect(products).to.be.deep.equal(ProductsMock.fakeIdOne);
+        });
+      });
     });
-    after(() => {
-      ProductsModel.getById.restore();
-    });
-
-    it('should call a function to make a request to model and got all Products', async () => {
-      const products = await ProductsService.getById(ProductsMock.fakeIdOne);
-      expect(products).to.deep.eq(ProductsMock.fullProducts[0]);
-    });
-  });
-});
-
-// ------------------------ Test to create function. -----------------------
-
-
-// ------------------------ Test to update function. -----------------------
-
-
-// ------------------------ Test to remove function. -----------------------
+    // não consegui criar o que não consegue fazer update.
   });
 });

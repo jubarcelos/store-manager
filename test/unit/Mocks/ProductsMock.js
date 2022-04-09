@@ -1,5 +1,6 @@
 const fakeIdOne = 1;
 const fakeIdTwo = 2;
+const fakeIdFive = 5;
 
 const emptyProducts = [];
 
@@ -21,7 +22,8 @@ const fullProducts = [
   },
 ];
 
-const fakeBodyFulled = { name: "produto 1", quantity: 1 }
+const fakeProduct =  { id: fakeIdOne, name: 'produto 1', quantity: 1 }
+const fakeBodyFulled = { name: "produto", quantity: 1 }
 const fakeBodyExistent = { name: "produto 2", quantity: 2 }
 
 const fakeBodyNullName = { quantity: 1 }
@@ -48,5 +50,6 @@ module.exports = {
   updateProductSuccessResponse,
   updateProductSuccess,
   fakeBodyChange,
+  fakeProduct,
 };
 
